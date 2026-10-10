@@ -15,4 +15,13 @@ https://github.com/Klerith/fernando-skills
 npx skills@latest add Klerith/fernando-skills
 ```
 
-## Prueba para reglas de github
+## Commands
+
+```bash
+npm run dev     # next dev (Turbopack)
+npm run build   # production build
+npm run start   # serve the production build
+npm run lint    # eslint (flat config, next core-web-vitals + typescript)
+```
+
+There is no test runner configured yet.
