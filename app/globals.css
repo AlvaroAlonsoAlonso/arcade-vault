@@ -979,4 +979,42 @@ a { color: inherit; text-decoration: none; }
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }
 @keyframes spinpix { to { transform: rotate(360deg); } }
+
+/* ===== 404: monitor sin señal ===== */
+.av-404 {
+  max-width: 560px;
+  margin: 48px auto 80px;
+  padding: 0 24px;
+  text-align: center;
+}
+.av-404 .crt { margin-bottom: 36px; }
+.av-404 .no-signal {
+  font-family: var(--pixel);
+  font-size: clamp(48px, 14vw, 88px);
+  color: var(--ink);
+  text-shadow: -3px 0 0 var(--magenta), 3px 0 0 var(--cyan), 0 0 18px rgba(0,245,255,0.35);
+  animation: rgbsplit 3.2s steps(1, end) infinite;
+}
+@keyframes rgbsplit {
+  0%, 86%, 100% { text-shadow: -3px 0 0 var(--magenta), 3px 0 0 var(--cyan), 0 0 18px rgba(0,245,255,0.35); transform: none; }
+  88% { text-shadow: -9px 0 0 var(--magenta), 7px 0 0 var(--cyan), 0 0 18px rgba(0,245,255,0.35); transform: translateX(2px); }
+  92% { text-shadow: 5px 0 0 var(--magenta), -6px 0 0 var(--cyan), 0 0 18px rgba(0,245,255,0.35); transform: translateX(-3px); }
+}
+.av-404 .crt-bottom .led::before { background: var(--magenta); box-shadow: 0 0 6px var(--magenta); }
+.av-404 h1 {
+  font-family: var(--pixel);
+  font-size: clamp(14px, 3vw, 18px);
+  line-height: 1.6;
+  margin: 0 0 14px;
+  color: var(--cyan);
+}
+.av-404 p {
+  margin: 0 auto 28px;
+  max-width: 44ch;
+  color: var(--ink-dim);
+}
+.av-404 .btn:focus-visible { outline: 2px solid var(--yellow); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .av-404 .no-signal { animation: none; }
+}
 }
