@@ -35,3 +35,7 @@ A standalone HTML/React 18 prototype (Babel in the browser, globals on `window`,
 ## Skills
 
 Usa siempre /frontend-desing para diseñar las interfaces de usuario
+
+## Playwright MCP
+
+Guarda siempre las capturas de pantalla del MCP de Playwright en la carpeta `.playwright-screenshots/` (pasa `filename: ".playwright-screenshots/<nombre>.png"` a `browser_take_screenshot`). Nunca uses la carpeta por defecto `.playwright-mcp/`.

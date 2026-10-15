@@ -1,12 +1,50 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { GAMES, getGame, seededScores } from "@/lib/games";
 
 export function generateStaticParams() {
   return GAMES.map((g) => ({ id: g.id }));
 }
 
-export default async function DetallePage({ params }: PageProps<"/juegos/[id]">) {
+// params is URL data: it is read inside <Suspense> so the shared App Shell
+// (Partial Prefetching) stays URL-independent and navigation is instant.
+export default function DetallePage({ params }: PageProps<"/juegos/[id]">) {
+  return (
+    <Suspense fallback={<DetalleSkeleton />}>
+      <DetalleContent params={params} />
+    </Suspense>
+  );
+}
+
+function DetalleSkeleton() {
+  return (
+    <div className="av-detail" aria-busy="true">
+      <div>
+        <div className="detail-cover av-skel"></div>
+        <div style={{ marginTop: 20 }} className="detail-info">
+          <div className="av-skel" style={{ height: 22, width: "60%" }}></div>
+          <div className="av-skel" style={{ height: 32, width: "45%" }}></div>
+          <div className="av-skel" style={{ height: 64 }}></div>
+        </div>
+      </div>
+      <aside>
+        <div className="leaderboard">
+          <h3>MEJORES PUNTUACIONES</h3>
+          {Array.from({ length: 10 }, (_, i) => (
+            <div key={i} className="lb-row">
+              <div className="av-skel" style={{ height: 12 }}></div>
+              <div className="av-skel" style={{ height: 12, width: "70%" }}></div>
+              <div className="av-skel" style={{ height: 12 }}></div>
+            </div>
+          ))}
+        </div>
+      </aside>
+    </div>
+  );
+}
+
+async function DetalleContent({ params }: Pick<PageProps<"/juegos/[id]">, "params">) {
   const { id } = await params;
   const game = getGame(id);
   if (!game) notFound();
