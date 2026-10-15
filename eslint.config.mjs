@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Standalone HTML/Babel prototype used as design reference, not compiled.
+    "references/**",
   ]),
 ]);
 
