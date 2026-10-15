@@ -17,7 +17,7 @@ export default function NotFound() {
 
       <h1>Este juego no está en el vault</h1>
       <p>La dirección no corresponde a ningún juego ni pantalla. Revisa el enlace o elige otro juego en la biblioteca.</p>
-      <Link href="/" className="btn lg">VOLVER A LA BIBLIOTECA</Link>
+      <Link href="/biblioteca" className="btn lg">VOLVER A LA BIBLIOTECA</Link>
     </div>
   );
 }
