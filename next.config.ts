@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   partialPrefetching: true,
+  // `/` no tiene página propia: se redirige antes del render (un redirect() en
+  // app/page.tsx rompe la validación `instant` de partialPrefetching en dev).
+  redirects() {
+    return [{ source: "/", destination: "/inicio", permanent: false }];
+  },
   turbopack: {
     rules: {
       "*.css": {

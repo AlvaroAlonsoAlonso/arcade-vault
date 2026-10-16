@@ -42,7 +42,7 @@ Tabla de rutas resultante:
 
 | Ruta                 | Contenido                  | Enlace activo del nav |
 | -------------------- | -------------------------- | --------------------- |
-| `/`                  | `redirect("/inicio")`      | —                     |
+| `/`                  | Redirección 307 a `/inicio` (`redirects()` en `next.config.ts`, sin página) | — |
 | `/inicio`            | Home (landing)             | Inicio                |
 | `/biblioteca`        | Biblioteca (antes en `/`)  | Biblioteca            |
 | `/juegos/[id]`       | Detalle                    | Biblioteca            |
@@ -53,7 +53,7 @@ Tabla de rutas resultante:
 
 ## Plan de implementación
 
-1. **Mover la Biblioteca.** Crear `app/biblioteca/page.tsx` con el contenido actual de `app/page.tsx`. Reemplazar `app/page.tsx` por un `redirect("/inicio")` de `next/navigation` (leer antes la guía de `redirect` en `node_modules/next/dist/docs/`). Verificación: `/biblioteca` muestra la biblioteca; `/` redirige (a una 404 hasta el paso 4).
+1. **Mover la Biblioteca.** Crear `app/biblioteca/page.tsx` con el contenido actual de `app/page.tsx`. Eliminar `app/page.tsx` y redirigir `/` → `/inicio` con `redirects()` en `next.config.ts` (`permanent: false`, 307). Verificación: `/biblioteca` muestra la biblioteca; `/` redirige (a una 404 hasta el paso 7).
 2. **Actualizar enlaces a la biblioteca.** Cambiar `href="/"` / `router.push("/")` por `/biblioteca` en `components/auth-form.tsx` (2), `components/game-player.tsx` (VOLVER AL VAULT), `app/juegos/[id]/page.tsx` (VOLVER AL VAULT), `components/hall-of-fame.tsx` (VOLVER A LA BIBLIOTECA) y `app/not-found.tsx`. Verificación: `grep` no encuentra `href="/"` ni `push("/")` en `app/` y `components/`.
 3. **Nav ampliado.** En `components/nav.tsx`, ampliar `Section` a `"inicio" | "biblioteca" | "salon" | "acerca" | "auth"`. `isActive`: inicio → `/inicio`; biblioteca → `/biblioteca` o `/juegos/*`; salon → `/salon`; acerca → `/acerca`; auth → `/login`. Añadir los enlaces Inicio y Acerca de en el orden del prototipo, en la barra y en el panel móvil. El logo enlaza a `/inicio`. Verificación: los cuatro enlaces aparecen y el activo cambia al navegar.
 4. **CSS de la Home.** Copiar a `app/globals.css`, en un bloque `/* ===== home ===== */` tras el de salón, las secciones `HOME PAGE`, `ACTIVITY (leaderboard + ticker)` y `PRICING` de `references/templates/home-about/styles.css`, sin las de `ABOUT PAGE`, `GAMEPAD` ni `Theme variants`. No duplicar reglas que ya existen (`.btn.xl`, `.btn.pulse`, `.fade-in`, `.blink`…). Verificación: `npm run build` compila.
@@ -89,6 +89,11 @@ Tabla de rutas resultante:
 - **Sí:** Home en `/inicio` y Biblioteca en `/biblioteca`, con `/` redirigiendo a `/inicio`. Cada pantalla tiene su URL propia y no hay contenido duplicado.
 - **No:** Home en `/` con la Biblioteca en `/biblioteca`. El usuario prefiere una ruta explícita `/inicio`.
 - **No:** mostrar la Home también en `/`. Duplica contenido y complica el enlace activo.
+- **Sí:** redirigir `/` con `redirects()` en `next.config.ts`, antes del render. Cambio decidido durante la implementación.
+- **No:** `redirect()` en `app/page.tsx` (plan original). Con `partialPrefetching`, en dev provoca `Could not validate 'instant' because an error prevented the target segment from rendering` en `/`.
+- **No:** `export const instant = false` en `app/page.tsx`. Silencia la validación pero mantiene una página que solo redirige.
+- **Sí:** renombrar `@keyframes pulse` del tema a `av-pulse`. Tailwind v4 emite su propio `@keyframes pulse` (opacidad) sin capa y pisaba el glow de `.btn.pulse`. Detectado en la verificación con Playwright.
+- **Sí:** `font-weight: 700` en `.home-title`, `.section-title` y `.final-title`. El preflight de Tailwind quita el bold de `h1`/`h2` y el prototipo pinta Press Start 2P con negrita sintética.
 - **Sí:** enlace Acerca de apuntando a `/acerca`, aunque hoy dé 404. Fiel al diseño y queda listo para el spec de About.
 - **No:** quitar el enlace o deshabilitarlo. Se desvía del prototipo.
 - **Sí:** logo → `/inicio`, igual que el prototipo.
@@ -110,7 +115,7 @@ Tabla de rutas resultante:
 | Las capturas de página completa no disparan el IntersectionObserver.                       | Hacer scroll hasta el final con `browser_evaluate` antes de capturar, o forzar `.in` en todos los `.reveal` para la captura. |
 | Diferencias de fuente (prototipo con Google Fonts por CDN, app con `next/font`).           | Comparar con las fuentes ya cargadas; si difieren métricas, ajustar en `globals.css` sin tocar el prototipo.                 |
 | Algún enlace a `/` queda sin actualizar y lleva a la landing en lugar de a la biblioteca.  | `grep` de `href="/"` y `push("/")` en el paso 2 y criterio de aceptación específico.                                         |
-| `redirect()` en `app/page.tsx` se comporta distinto con Cache Components.                  | Leer la guía en `node_modules/next/dist/docs/` antes del paso 1 y comprobar con `npm run build`.                             |
+| `redirect()` en `app/page.tsx` se comporta distinto con Cache Components.                  | Materializado (error de validación `instant` en dev). Resuelto con `redirects()` en `next.config.ts`.                        |
 
 ## Lo que **no** entra en este spec
 
