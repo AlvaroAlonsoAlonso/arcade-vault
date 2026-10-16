@@ -1,6 +1,6 @@
 # SPEC 02 — Home (landing) en `/inicio` y nav ampliado
 
-> **Estado:** Aprobado
+> **Estado:** Implementada
 > **Depende de:** SPEC 01
 > **Fecha:** 2026-10-15
 > **Objetivo:** Portar la landing `home.jsx` y el nav de `references/templates/home-about/` a la app Next.js, moviendo la Biblioteca a `/biblioteca`, sin implementar la página Acerca de, y validar el resultado píxel a píxel con Playwright.
@@ -40,16 +40,16 @@ Los arrays de features, stats, ticker, top jugadores y FAQ se copian literalment
 
 Tabla de rutas resultante:
 
-| Ruta                 | Contenido                  | Enlace activo del nav |
-| -------------------- | -------------------------- | --------------------- |
-| `/`                  | Redirección 307 a `/inicio` (`redirects()` en `next.config.ts`, sin página) | — |
-| `/inicio`            | Home (landing)             | Inicio                |
-| `/biblioteca`        | Biblioteca (antes en `/`)  | Biblioteca            |
-| `/juegos/[id]`       | Detalle                    | Biblioteca            |
-| `/juegos/[id]/jugar` | Reproductor                | Biblioteca            |
-| `/salon`             | Salón de la Fama           | Salón de la Fama      |
-| `/acerca`            | 404 temática (sin archivo) | Acerca de             |
-| `/login`             | Auth                       | — (solo panel móvil)  |
+| Ruta                 | Contenido                                                                   | Enlace activo del nav |
+| -------------------- | --------------------------------------------------------------------------- | --------------------- |
+| `/`                  | Redirección 307 a `/inicio` (`redirects()` en `next.config.ts`, sin página) | —                     |
+| `/inicio`            | Home (landing)                                                              | Inicio                |
+| `/biblioteca`        | Biblioteca (antes en `/`)                                                   | Biblioteca            |
+| `/juegos/[id]`       | Detalle                                                                     | Biblioteca            |
+| `/juegos/[id]/jugar` | Reproductor                                                                 | Biblioteca            |
+| `/salon`             | Salón de la Fama                                                            | Salón de la Fama      |
+| `/acerca`            | 404 temática (sin archivo)                                                  | Acerca de             |
+| `/login`             | Auth                                                                        | — (solo panel móvil)  |
 
 ## Plan de implementación
 
