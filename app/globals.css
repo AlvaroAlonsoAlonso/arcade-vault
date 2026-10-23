@@ -2904,6 +2904,12 @@
   .contact-title {
     font-weight: 700;
   }
+  /* El preflight pone `font: inherit` en los controles; el prototipo usa la fuente por defecto
+     del navegador en el textarea (13.33px, line-height normal) y mide 112px con rows=5. */
+  .contact-form textarea {
+    font-size: 13.3333px;
+    line-height: normal;
+  }
 
   /* ===== skeleton (Suspense fallbacks) ===== */
   .av-skel {
