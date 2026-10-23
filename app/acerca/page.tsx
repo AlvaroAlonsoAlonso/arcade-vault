@@ -1,3 +1,4 @@
+import { ContactForm } from "@/components/contact-form";
 import { HighlightIcon, type HighlightIconKind } from "@/components/highlight-icon";
 import { RevealObserver } from "@/components/reveal-observer";
 
@@ -60,22 +61,7 @@ export default function AcercaPage() {
             </div>
           </div>
 
-          {/* Maquetado del prototipo sin lógica; el formulario real llega en el paso 6 */}
-          <form className="contact-form">
-            <div className="field">
-              <label htmlFor="contact-name">NOMBRE</label>
-              <input id="contact-name" name="name" placeholder="px_kai" />
-            </div>
-            <div className="field">
-              <label htmlFor="contact-email">CORREO ELECTRÓNICO</label>
-              <input id="contact-email" name="email" type="email" placeholder="jugador@vault.gg" />
-            </div>
-            <div className="field">
-              <label htmlFor="contact-msg">MENSAJE</label>
-              <textarea id="contact-msg" name="msg" rows={5} placeholder="Cuéntanos qué tienes en mente…"></textarea>
-            </div>
-            <button className="btn xl press" type="submit" style={{ width: "100%" }}>▶  ENVIAR MENSAJE</button>
-          </form>
+          <ContactForm />
         </div>
       </section>
     </div>
