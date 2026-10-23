@@ -2867,6 +2867,38 @@
     animation: blink 1s steps(1) infinite;
   }
 
+  /* Estados de error del formulario (no existen en el prototipo; misma estética neón) */
+  .field-error {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    line-height: 1.5;
+    color: var(--magenta);
+    text-shadow: 0 0 6px rgba(255, 0, 110, 0.45);
+  }
+  .field.invalid input,
+  .field.invalid textarea {
+    border-color: var(--magenta);
+    box-shadow: 0 0 10px rgba(255, 0, 110, 0.3);
+  }
+  .contact-form .btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+  .terminal-error {
+    border-color: var(--magenta);
+    box-shadow: 0 0 22px rgba(255, 0, 110, 0.25);
+  }
+  .terminal-error .term-body .err {
+    color: var(--magenta);
+  }
+  .term-body .failure {
+    margin-top: 12px;
+    color: var(--magenta);
+    text-shadow: 0 0 6px rgba(255, 0, 110, 0.45);
+    font-weight: 700;
+    white-space: pre-wrap;
+  }
+
   /* Ajuste del port: el preflight de Tailwind quita el bold de h1/h2 (igual que en la Home). */
   .about-title,
   .contact-title {
